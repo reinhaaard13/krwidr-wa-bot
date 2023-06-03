@@ -76,10 +76,21 @@ async function connectToWhatsApp() {
       return
     }
 
-		await sock.sendMessage(m.messages[0].key.remoteJid!, {
-			text: "Welcome to Rei's Whatsapp Bot! Prefix your message with 'krw' or 'idr' to convert currency.",
-		});
+    if (m.messages[0].message?.conversation?.toLowerCase().startsWith("!help")) {
+      await sock.sendMessage(m.messages[0].key.remoteJid!, {
+        text: "👋 Hi, this is Rei's Whatsapp Bot! Prefix your message with 'krw' or 'idr' to convert currency.",
+      });
+      return
+    }
+
 	});
+
+  sock.ev.on("groups.upsert", async (g) => {
+    await sock.sendMessage(g[0].id, {
+      text: "👋 Hi, this is Rei's Whatsapp Bot! Prefix your message with 'krw' or 'idr' to convert currency.",
+    })
+    return
+  })  
 
   sock.ev.on("creds.update", saveCreds)
 }
