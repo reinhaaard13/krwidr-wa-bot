@@ -49,7 +49,7 @@ async function connectToWhatsApp() {
     }
 
     if (m.messages[0].message?.conversation?.toLowerCase().startsWith("krw")) {
-      const won = m.messages[0].message?.conversation?.split("krw ")[1].trim().replace(/[^0-9]/g, "");
+      const won = m.messages[0].message?.conversation?.split(/krw/gi)[1].trim().replace(/[^0-9]/g, "");
 
       const idr = await exchangeRate.getIDRFromKRW(+won);
 
@@ -63,7 +63,7 @@ async function connectToWhatsApp() {
     }
 
     if (m.messages[0].message?.conversation?.toLowerCase().startsWith("idr")) {
-      const idr = m.messages[0].message?.conversation?.split("idr ")[1].trim().replace(/[^0-9]/g, "");
+      const idr = m.messages[0].message?.conversation?.split(/idr/gi)[1].trim().replace(/[^0-9]/g, "");
 
       const won = await exchangeRate.getKRWFromIDR(+idr);
 
